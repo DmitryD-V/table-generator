@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 interface Props {
     $placeholder?: string
     $isActive?: boolean
+    $error?: boolean
 }
 
 export const Container = styled.div``;
@@ -16,7 +17,7 @@ export const DropdownToggler = styled.button<Props>`
   width: 100%;
   min-height: 42px;
   padding: 13px 27px 13px 13px;
-  border: 1px solid #E6ECEF;
+  border: 1px solid ${(props: Props) => props.$error ? 'red' : '#E6ECEF'};
   border-radius: 4px;
   background-color: #FFFFFF;
   overflow: hidden;
@@ -85,4 +86,9 @@ export const DropdownItem = styled.button<Props>`
     font-weight: 700;
     pointer-events: none;
   `}
+`;
+
+export const Error = styled.div`
+  margin-top: 4px;
+  color: red;
 `;

@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { FC } from 'react';
 import {
+    CellText,
     Container,
     CopyBtn,
     RemoveBtn,
@@ -10,13 +11,31 @@ import {
     TableRow,
     TableWrapper
 } from './styles';
+import nextId from 'react-id-generator';
 
-export const Table = () => {
+interface DataItemType {
+    id: string;
+    name: string;
+    surname: string;
+    age: string;
+    city: string;
+}
+
+interface Props {
+    data: Array<DataItemType>;
+    copyTable: () => void;
+    removeTable?: () => void;
+    editRow: (data: DataItemType) => void;
+    removeRow: (id: string) => void;
+}
+
+export const Table: FC<Props> = ({ data, copyTable, removeTable, editRow, removeRow }) => {
+
     return (
         <Container>
             <TableButtons>
-                <CopyBtn>Copy table</CopyBtn>
-                <RemoveBtn />
+                <CopyBtn onClick={copyTable}>Copy table</CopyBtn>
+                {removeTable && <RemoveBtn onClick={removeTable} />}
             </TableButtons>
             <TableWrapper>
                 <TableRow>
@@ -26,65 +45,32 @@ export const Table = () => {
                     <TableHeader>City</TableHeader>
                     <TableHeader />
                 </TableRow>
-                <TableRow>
-                    <TableCell $mobileHead={'Name'}>
-                        <div>Name</div>
-                    </TableCell>
-                    <TableCell $mobileHead={'Surname'}>
-                        <div>Surname</div>
-                    </TableCell>
-                    <TableCell $mobileHead={'Age'}>
-                        <div>Age</div>
-                    </TableCell>
-                    <TableCell $mobileHead={'City'}>
-                        <div>City</div>
-                    </TableCell>
+                {data.map((item) => <TableRow key={item.id}>
+                    <TableCell $mobileHead={'Name'} title={item.name}><CellText>{item.name}</CellText></TableCell>
+                    <TableCell $mobileHead={'Surname'}
+                               title={item.surname}><CellText>{item.surname}</CellText></TableCell>
+                    <TableCell $mobileHead={'Age'} title={item.age}><CellText>{item.age}</CellText></TableCell>
+                    <TableCell $mobileHead={'City'} title={item.city}><CellText>{item.city}</CellText></TableCell>
                     <TableCell>
-                        <TableButton $color={'#057AE3'}>Edit</TableButton>
-                        <TableButton $color={'#B0263D'}>Delete</TableButton>
+                        <TableButton $color={'#057AE3'} onClick={() => editRow(item)}>Edit</TableButton>
+                        <TableButton $color={'#B0263D'} onClick={() => removeRow(item.id)}>Delete</TableButton>
                     </TableCell>
-                </TableRow>
+                </TableRow>)}
+                {data.length < 7 && Array(7 - data.length).fill('').map(() => <TableRow
+                    key={nextId()}
+                >
+                    <TableCell />
+                    <TableCell />
+                    <TableCell />
+                    <TableCell />
+                    <TableCell />
+                </TableRow>)}
                 <TableRow>
-                    <TableCell><div /></TableCell>
-                    <TableCell><div /></TableCell>
-                    <TableCell><div /></TableCell>
-                    <TableCell><div /></TableCell>
-                    <TableCell><div /></TableCell>
-                </TableRow>
-                <TableRow>
-                    <TableCell><div /></TableCell>
-                    <TableCell><div /></TableCell>
-                    <TableCell><div /></TableCell>
-                    <TableCell><div /></TableCell>
-                    <TableCell><div /></TableCell>
-                </TableRow>
-                <TableRow>
-                    <TableCell><div /></TableCell>
-                    <TableCell><div /></TableCell>
-                    <TableCell><div /></TableCell>
-                    <TableCell><div /></TableCell>
-                    <TableCell><div /></TableCell>
-                </TableRow>
-                <TableRow>
-                    <TableCell><div /></TableCell>
-                    <TableCell><div /></TableCell>
-                    <TableCell><div /></TableCell>
-                    <TableCell><div /></TableCell>
-                    <TableCell><div /></TableCell>
-                </TableRow>
-                <TableRow>
-                    <TableCell><div /></TableCell>
-                    <TableCell><div /></TableCell>
-                    <TableCell><div /></TableCell>
-                    <TableCell><div /></TableCell>
-                    <TableCell><div /></TableCell>
-                </TableRow>
-                <TableRow>
-                    <TableCell><div /></TableCell>
-                    <TableCell><div /></TableCell>
-                    <TableCell><div /></TableCell>
-                    <TableCell><div /></TableCell>
-                    <TableCell><div /></TableCell>
+                    <TableCell />
+                    <TableCell />
+                    <TableCell />
+                    <TableCell />
+                    <TableCell />
                 </TableRow>
             </TableWrapper>
         </Container>

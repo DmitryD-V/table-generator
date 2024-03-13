@@ -40,17 +40,17 @@ export const RemoveBtn = styled.button`
   cursor: pointer;
 `;
 
-export const TableWrapper = styled.div`
-  border-radius: 2px 2px 0 0;
-`;
+export const TableWrapper = styled.div``;
 
 export const TableRow = styled.div`
   display: grid;
   grid-template-columns: 95px 130px 97px 80px 1fr;
+  align-content: center;
   border-top: 1px solid #EBEBEB;
   background-color: #FFFFFF;
 
   &:first-child {
+    border-radius: 2px 2px 0 0;
     background-color: #0A508B;
   }
 
@@ -62,7 +62,7 @@ export const TableRow = styled.div`
 
   @media screen and (max-width: 768px) {
     grid-template-columns: 1fr 1fr;
-    margin-top: 12px;
+    margin-top: 4px;
     border-radius: 2px;
     
     &:first-child {
@@ -77,10 +77,12 @@ export const TableRow = styled.div`
 
 export const TableHeader = styled.div`
   padding: 9px 12px 7px;
-  color: #FFFFFF;
+  color: rgba(255, 255, 255, 0.5);
   font-weight: normal;
   text-align: left;
   border-left: 1px solid #0A508B;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   &:first-child {
     border: none;
@@ -88,17 +90,20 @@ export const TableHeader = styled.div`
 `;
 
 export const TableCell = styled.div<Props>`
-  align-self: center;
-  padding: 9px 12px 10px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  min-height: 32px;
+  padding: 9px 12px;
   color: #868A8D;
   border-left: 1px solid #EBEBEB;
 
   &:first-child {
     border-left: none;
   }
-
-  div {
-    min-height: 13px;
+  
+  ${TableRow}:last-child & {
+    min-height: 72px;
   }
 
   @media screen and (max-width: 768px) {
@@ -117,9 +122,15 @@ export const TableCell = styled.div<Props>`
     
     &:before {
       content: '${(props: Props) => props.$mobileHead}';
+      display: block;
+      margin-bottom: 4px;
       font-size: 12px;
     }
   }
+`;
+export const CellText = styled.span`
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 export const TableButton = styled.button<Props>`

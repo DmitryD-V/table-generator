@@ -38,6 +38,7 @@
                 "afterOpening": "never",
                 "beforeClosing": "allow"
             }
-        ]
+        ],
+        "@typescript-eslint/no-explicit-any": "off"
     }
 }
