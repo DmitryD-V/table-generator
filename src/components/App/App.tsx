@@ -35,13 +35,16 @@ const App: FC = () => {
     const copyTable = (id: string) => {
         const newTable = tablesData.find(item => item.id === id);
         if (newTable) {
-            setTablesData((prevState) => ([
-                ...prevState,
-                {
-                    ...newTable,
-                    id: nextId()
+            setTablesData((prevState) => prevState.reduce((acc, item) => {
+                acc.push(item);
+                if (item.id === id) {
+                    acc.push({
+                        ...newTable,
+                        id: nextId()
+                    });
                 }
-            ]));
+                return acc;
+            }, [] as Array<TableDataType>));
         }
     };
 
@@ -67,11 +70,11 @@ const App: FC = () => {
             .map((item, index) => index === 0 ? {
                 ...item,
                 data: [
+                    ...item.data,
                     {
                         id: nextId(),
                         ...data
-                    },
-                    ...item.data
+                    }
                 ]
             } : item));
     };

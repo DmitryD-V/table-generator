@@ -23,19 +23,14 @@ interface Props {
 export const ModalForm: FC<Props> = ({ data, onClose, submit }) => {
 
     const [scroll, setScroll] = useState(false);
+    const ref = useRef(null);
+
+    useClickOutside(ref, onClose);
 
     useEffect(() => {
         const safeDocument = typeof document !== 'undefined' && document;
         setScroll(safeDocument && (window.innerWidth - safeDocument.documentElement.clientWidth > 0));
     }, []);
-
-    const ref = useRef(null);
-
-    const handleClickOutside = () => {
-        onClose();
-    };
-
-    useClickOutside(ref, handleClickOutside);
 
     const onSubmit = (values: {
         name: string
